@@ -1,0 +1,31 @@
+name: Test and Create Issue on Failure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check DOCTYPE declaration
+      run: |
+        # Use the appropriate script based on your choice (JavaScript or Shell)
+        # For example, use "./check-doctype.js" for JavaScript or "./check-doctype.sh" for Shell.
+        ./check-doctype.js || ./check-doctype.sh
+      continue-on-error: true
+
+    - name: Create Issue on Failure
+      if: failure()
+      uses: peter-evans/create-issue-from-file@v2
+      with:
+        title: "Bug: Missing DOCTYPE Declaration in index.html"
+        labels: bug
+        assignees: your_username
+        body: |
+          The index.html file is missing the required DOCTYPE declaration on the first line. Please fix this issue.
