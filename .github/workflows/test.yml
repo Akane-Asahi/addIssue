@@ -19,12 +19,13 @@ jobs:
         chmod +x ./check-doctype.sh
 
     - name: Check DOCTYPE declaration
+      id: check-doctype
       run: |
         ./check-doctype.js || ./check-doctype.sh
       continue-on-error: true
 
     - name: Create Issue on Failure
-      if: failure()
+      if: steps.check-doctype.outcome == 'failure'
       uses: peter-evans/create-issue-from-file@v2
       with:
         title: "Bug: Missing DOCTYPE Declaration in index.html"
