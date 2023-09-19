@@ -13,10 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set execute permissions
+      run: |
+        chmod +x ./check-doctype.js
+        chmod +x ./check-doctype.sh
+
     - name: Check DOCTYPE declaration
       run: |
-        # Use the appropriate script based on your choice (JavaScript or Shell)
-        # For example, use "./check-doctype.js" for JavaScript or "./check-doctype.sh" for Shell.
         ./check-doctype.js || ./check-doctype.sh
       continue-on-error: true
 
