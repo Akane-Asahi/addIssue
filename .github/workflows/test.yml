@@ -13,6 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # Choose a Python version that works for you
+
     - name: Set execute permissions
       run: |
         chmod +x ./check-doctype.js
